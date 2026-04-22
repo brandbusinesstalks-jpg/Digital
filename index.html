@@ -1,0 +1,1699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BBT — Brand Business Talk | Where Brands & Bold Ideas Come to Life</title>
+  <meta name="description" content="BBT is a premium digital media platform covering business, branding, careers, technology, and entrepreneurship with clarity and intelligence." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =============================================
+       DESIGN TOKENS
+    ============================================= */
+    :root {
+      --ink: #0d0d0d;
+      --paper: #f5f0e8;
+      --gold: #c9a84c;
+      --gold-light: #e0c068;
+      --red: #c0392b;
+      --muted: #6b6457;
+      --paper-dark: #ede7d8;
+      --ink-soft: #1a1a1a;
+      --ink-mid: #2a2722;
+
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-serif: 'DM Serif Display', serif;
+      --font-body: 'DM Sans', sans-serif;
+
+      --nav-h: 72px;
+      --max-w: 1280px;
+      --section-pad: clamp(72px, 8vw, 120px);
+    }
+
+    /* =============================================
+       RESET & BASE
+    ============================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: var(--font-body);
+      background: var(--paper);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+    ul { list-style: none; }
+
+    /* =============================================
+       KEYFRAMES
+    ============================================= */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-24px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @keyframes hoverLift {
+      to { transform: translateY(-4px); }
+    }
+    @keyframes underlineExpand {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
+    }
+    @keyframes countUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes goldPulse {
+      0%, 100% { opacity: 0.6; }
+      50%       { opacity: 1; }
+    }
+    @keyframes floatCard {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-8px); }
+    }
+
+    /* =============================================
+       UTILITY
+    ============================================= */
+    .container {
+      width: 100%;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 clamp(20px, 4vw, 64px);
+    }
+    .tag {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 2px;
+    }
+    .tag--red  { background: var(--red); color: #fff; }
+    .tag--gold { background: var(--gold); color: var(--ink); }
+    .tag--outline { border: 1px solid var(--gold); color: var(--gold); }
+
+    /* =============================================
+       NAVBAR
+    ============================================= */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      z-index: 1000;
+      background: rgba(245,240,232,0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(201,168,76,0.25);
+      transition: box-shadow 0.3s;
+    }
+    #navbar.scrolled { box-shadow: 0 2px 32px rgba(13,13,13,0.10); }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    /* Logo */
+    .nav-logo { display: flex; align-items: center; gap: 10px; }
+    .nav-logo-icon {
+      width: 40px; height: 40px;
+      background: var(--ink);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .nav-logo-icon svg { width: 24px; height: 24px; }
+    .nav-logo-text { line-height: 1; }
+    .nav-logo-text .wordmark {
+      font-family: var(--font-display);
+      font-size: 22px;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+    }
+    .nav-logo-text .wordmark span { color: var(--gold); }
+    .nav-logo-text .tagline {
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 1px;
+    }
+
+    /* Center links */
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+    }
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink);
+      position: relative;
+      padding-bottom: 3px;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%; height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.28s ease;
+    }
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+    /* Right buttons */
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .btn-ghost {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      padding: 9px 20px;
+      border: 1.5px solid var(--ink);
+      border-radius: 2px;
+      color: var(--ink);
+      transition: background 0.22s, color 0.22s;
+    }
+    .btn-ghost:hover { background: var(--ink); color: var(--paper); }
+    .btn-gold {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      padding: 9px 22px;
+      background: var(--gold);
+      border-radius: 2px;
+      color: var(--ink);
+      border: 1.5px solid var(--gold);
+      transition: background 0.22s, transform 0.18s;
+    }
+    .btn-gold:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+    /* Hamburger */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      padding: 6px;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--ink);
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    /* Mobile menu */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: var(--nav-h); left: 0; right: 0;
+      background: rgba(245,240,232,0.97);
+      backdrop-filter: blur(14px);
+      border-bottom: 2px solid var(--gold);
+      padding: 24px;
+      z-index: 999;
+      flex-direction: column;
+      gap: 0;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+      color: var(--ink);
+    }
+    .mobile-menu .btn-gold { margin-top: 16px; text-align: center; display: block; }
+
+    /* =============================================
+       HERO
+    ============================================= */
+    #hero {
+      padding-top: var(--nav-h);
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* Left column */
+    .hero-left {
+      background: var(--paper);
+      padding: clamp(56px, 7vw, 96px) clamp(32px, 5vw, 80px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Grid texture */
+    .hero-left::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(201,168,76,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,168,76,0.06) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: slideIn 0.8s ease both;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 32px; height: 2px;
+      background: var(--gold);
+    }
+
+    .hero-headline {
+      font-family: var(--font-display);
+      line-height: 0.92;
+      margin-bottom: 28px;
+    }
+    .hero-headline .line1 {
+      display: block;
+      font-size: clamp(72px, 9vw, 110px);
+      color: var(--ink);
+      animation: fadeUp 0.9s ease 0.1s both;
+    }
+    .hero-headline .line2 {
+      display: block;
+      font-size: clamp(72px, 9vw, 110px);
+      color: var(--gold);
+      animation: fadeUp 0.9s ease 0.2s both;
+    }
+    .hero-headline .line3 {
+      display: block;
+      font-size: clamp(72px, 9vw, 110px);
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--red);
+      animation: fadeUp 0.9s ease 0.3s both;
+    }
+
+    .hero-body {
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--muted);
+      max-width: 420px;
+      margin-bottom: 36px;
+      animation: fadeUp 0.9s ease 0.4s both;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 56px;
+      animation: fadeUp 0.9s ease 0.5s both;
+    }
+    .btn-ink {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      padding: 13px 28px;
+      background: var(--ink);
+      color: var(--paper);
+      border-radius: 2px;
+      transition: background 0.22s, transform 0.18s;
+    }
+    .btn-ink:hover { background: var(--ink-mid); transform: translateY(-2px); }
+    .btn-outline-gold {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      padding: 13px 28px;
+      border: 1.5px solid var(--gold);
+      color: var(--gold);
+      border-radius: 2px;
+      transition: background 0.22s, color 0.22s;
+    }
+    .btn-outline-gold:hover { background: var(--gold); color: var(--ink); }
+
+    .hero-stats {
+      display: flex;
+      gap: 36px;
+      animation: fadeUp 0.9s ease 0.6s both;
+    }
+    .stat-item {}
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 32px;
+      color: var(--ink);
+      line-height: 1;
+    }
+    .stat-num span { color: var(--gold); }
+    .stat-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* Right column */
+    .hero-right {
+      background: var(--ink);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-right-watermark {
+      position: absolute;
+      font-family: var(--font-display);
+      font-size: 260px;
+      color: rgba(255,255,255,0.04);
+      letter-spacing: -0.02em;
+      user-select: none;
+      pointer-events: none;
+      line-height: 1;
+    }
+    /* Gold gradient accent at bottom */
+    .hero-right-gradient {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 200px;
+      background: linear-gradient(to top, rgba(201,168,76,0.18), transparent);
+      pointer-events: none;
+    }
+    /* Red gradient accent at top right */
+    .hero-right-gradient2 {
+      position: absolute;
+      top: 0; right: 0;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle at top right, rgba(192,57,43,0.15), transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-feature-card {
+      position: relative;
+      z-index: 2;
+      background: rgba(245,240,232,0.06);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 6px;
+      padding: 36px;
+      width: min(380px, 85%);
+      animation: floatCard 6s ease-in-out infinite, fadeUp 1s ease 0.4s both;
+      /* gold offset border */
+      box-shadow: 6px 6px 0 rgba(201,168,76,0.25);
+    }
+    .hero-feature-card .tag { margin-bottom: 20px; }
+    .hero-feature-card .card-headline {
+      font-family: var(--font-serif);
+      font-size: clamp(22px, 2.8vw, 30px);
+      color: var(--paper);
+      line-height: 1.25;
+      margin-bottom: 20px;
+    }
+    .hero-feature-card .card-meta {
+      font-size: 12px;
+      color: rgba(245,240,232,0.45);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .card-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .pill {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      padding: 5px 12px;
+      border-radius: 100px;
+      border: 1px solid rgba(201,168,76,0.4);
+      color: rgba(245,240,232,0.6);
+    }
+
+    /* =============================================
+       TICKER
+    ============================================= */
+    #ticker {
+      background: var(--ink);
+      border-top: 3px solid var(--gold);
+      overflow: hidden;
+      height: 48px;
+      display: flex;
+      align-items: center;
+    }
+    .ticker-track {
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      animation: ticker 28s linear infinite;
+    }
+    .ticker-item {
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.7);
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .ticker-item::after {
+      content: '◆';
+      color: var(--gold);
+      font-size: 8px;
+    }
+
+    /* =============================================
+       ABOUT
+    ============================================= */
+    #about {
+      padding: var(--section-pad) 0;
+      background: var(--paper);
+    }
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(40px, 6vw, 96px);
+      align-items: start;
+    }
+    .about-left {}
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-label::before {
+      content: '';
+      width: 24px; height: 2px;
+      background: var(--gold);
+    }
+    .about-headline {
+      font-family: var(--font-serif);
+      font-size: clamp(32px, 4vw, 52px);
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 28px;
+    }
+    .about-headline em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .about-para {
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .about-right {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .mv-card {
+      position: relative;
+      padding: 36px;
+      border: 1px solid var(--paper-dark);
+      border-radius: 4px;
+      overflow: hidden;
+      cursor: default;
+      transition: background 0.35s, border-color 0.35s;
+      background: var(--paper);
+    }
+    .mv-card:hover {
+      background: var(--ink);
+      border-color: var(--ink);
+    }
+    .mv-card:hover .mv-title,
+    .mv-card:hover .mv-body { color: var(--paper); }
+    .mv-card:hover .mv-watermark { color: rgba(245,240,232,0.06); }
+    .mv-card:hover .mv-accent { background: var(--gold); }
+    .mv-watermark {
+      position: absolute;
+      top: -10px; right: 16px;
+      font-family: var(--font-display);
+      font-size: 100px;
+      color: rgba(13,13,13,0.04);
+      line-height: 1;
+      user-select: none;
+      pointer-events: none;
+      transition: color 0.35s;
+    }
+    .mv-accent {
+      width: 32px; height: 3px;
+      background: var(--gold);
+      margin-bottom: 16px;
+      transition: background 0.35s;
+    }
+    .mv-title {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      color: var(--ink);
+      margin-bottom: 12px;
+      transition: color 0.35s;
+    }
+    .mv-body {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--muted);
+      transition: color 0.35s;
+    }
+
+    /* =============================================
+       VALUES
+    ============================================= */
+    #values {
+      padding: var(--section-pad) 0;
+      background: var(--ink);
+    }
+    .values-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .values-header .section-label { justify-content: center; }
+    .values-header .section-label::before { display: none; }
+    .values-headline {
+      font-family: var(--font-display);
+      font-size: clamp(40px, 5vw, 64px);
+      color: var(--paper);
+      letter-spacing: 0.02em;
+    }
+    .values-headline span { color: var(--gold); }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    .value-card {
+      padding: 40px 32px;
+      border: 1px solid rgba(245,240,232,0.08);
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.28s;
+      cursor: default;
+    }
+    .value-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s ease;
+    }
+    .value-card:hover::before { transform: scaleX(1); }
+    .value-card:hover { transform: translateY(-4px); border-color: rgba(201,168,76,0.25); }
+
+    .value-num {
+      font-family: var(--font-display);
+      font-size: 88px;
+      color: rgba(245,240,232,0.04);
+      line-height: 1;
+      margin-bottom: 20px;
+      user-select: none;
+    }
+    .value-title {
+      font-family: var(--font-serif);
+      font-size: 26px;
+      color: var(--paper);
+      margin-bottom: 14px;
+    }
+    .value-body {
+      font-size: 14px;
+      line-height: 1.7;
+      color: rgba(245,240,232,0.45);
+    }
+
+    /* =============================================
+       USP
+    ============================================= */
+    #usp {
+      padding: var(--section-pad) 0;
+      background: var(--paper);
+      overflow: hidden;
+    }
+    .usp-statement {
+      margin-bottom: 72px;
+    }
+    .usp-line {
+      display: block;
+      font-family: var(--font-display);
+      line-height: 0.9;
+    }
+    .usp-line-1 {
+      font-size: clamp(64px, 9vw, 120px);
+      color: var(--ink);
+    }
+    .usp-line-2 {
+      font-size: clamp(64px, 9vw, 120px);
+      color: var(--gold);
+    }
+    .usp-line-3 {
+      font-size: clamp(64px, 9vw, 120px);
+      color: transparent;
+      -webkit-text-stroke: 2px var(--ink);
+    }
+
+    .usp-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 2px;
+      border: 1px solid var(--paper-dark);
+    }
+    .usp-item {
+      padding: 36px 24px;
+      border-right: 1px solid var(--paper-dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 14px;
+      transition: background 0.28s;
+      cursor: default;
+    }
+    .usp-item:last-child { border-right: none; }
+    .usp-item:hover { background: var(--ink); }
+    .usp-item:hover .usp-item-label { color: var(--paper); }
+    .usp-item:hover .usp-icon { filter: brightness(1.3); }
+    .usp-icon {
+      font-size: 28px;
+      line-height: 1;
+    }
+    .usp-item-label {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink);
+      transition: color 0.28s;
+    }
+
+    /* =============================================
+       FOUNDER
+    ============================================= */
+    #founder {
+      padding: var(--section-pad) 0;
+      background: var(--paper-dark);
+    }
+    .founder-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: clamp(40px, 6vw, 80px);
+      align-items: center;
+    }
+    .founder-portrait {
+      position: relative;
+    }
+    .founder-card {
+      background: var(--ink);
+      border-radius: 6px;
+      padding: 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 380px;
+      position: relative;
+      overflow: hidden;
+    }
+    .founder-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(to right, var(--gold), var(--red));
+    }
+    .founder-initials {
+      font-family: var(--font-display);
+      font-size: 96px;
+      color: var(--paper);
+      line-height: 1;
+      position: relative;
+      z-index: 2;
+    }
+    .founder-initials-ghost {
+      position: absolute;
+      font-family: var(--font-display);
+      font-size: 200px;
+      color: rgba(255,255,255,0.03);
+      line-height: 1;
+      user-select: none;
+      pointer-events: none;
+    }
+    .founder-badge {
+      position: absolute;
+      bottom: 24px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--gold);
+      color: var(--ink);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 7px 18px;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+
+    .founder-right {}
+    .founder-name {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 6vw, 72px);
+      line-height: 0.95;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .founder-role {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 28px;
+    }
+    .founder-bio {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+    blockquote {
+      border-left: 3px solid var(--gold);
+      padding: 16px 24px;
+      margin: 0;
+      background: rgba(201,168,76,0.06);
+      border-radius: 0 4px 4px 0;
+    }
+    blockquote p {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 19px;
+      line-height: 1.55;
+      color: var(--ink);
+    }
+
+    /* =============================================
+       CONTACT
+    ============================================= */
+    #contact {
+      padding: var(--section-pad) 0;
+      background: var(--paper);
+    }
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: clamp(40px, 6vw, 80px);
+      align-items: start;
+    }
+    .contact-left {}
+    .contact-headline {
+      font-family: var(--font-serif);
+      font-size: clamp(28px, 3.5vw, 44px);
+      line-height: 1.2;
+      color: var(--ink);
+      margin-bottom: 36px;
+    }
+    .contact-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .contact-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 20px;
+      border: 1px solid var(--paper-dark);
+      border-radius: 4px;
+      transition: background 0.28s, border-color 0.28s;
+      cursor: default;
+    }
+    .contact-card:hover {
+      background: var(--ink);
+      border-color: var(--ink);
+    }
+    .contact-card:hover .cc-label,
+    .contact-card:hover .cc-value { color: var(--paper); }
+    .contact-card:hover .cc-icon { background: var(--gold); color: var(--ink); }
+    .cc-icon {
+      width: 40px; height: 40px;
+      border-radius: 4px;
+      background: var(--ink);
+      color: var(--paper);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+      transition: background 0.28s, color 0.28s;
+    }
+    .cc-text {}
+    .cc-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.28s;
+    }
+    .cc-value {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink);
+      transition: color 0.28s;
+    }
+
+    /* Form */
+    .contact-form-wrap {
+      background: var(--ink);
+      border-radius: 6px;
+      padding: clamp(32px, 4vw, 56px);
+    }
+    .form-title {
+      font-family: var(--font-serif);
+      font-size: 28px;
+      color: var(--paper);
+      margin-bottom: 32px;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.5);
+      margin-bottom: 8px;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      background: rgba(245,240,232,0.06);
+      border: 1px solid rgba(245,240,232,0.12);
+      border-radius: 3px;
+      padding: 13px 16px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--paper);
+      transition: border-color 0.22s;
+      outline: none;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(245,240,232,0.28); }
+    .form-group input:focus,
+    .form-group textarea:focus { border-color: var(--gold); }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+    .form-submit {
+      width: 100%;
+      padding: 15px;
+      background: var(--gold);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border-radius: 3px;
+      transition: background 0.22s, transform 0.18s;
+    }
+    .form-submit:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    #footer {
+      background: var(--ink-soft);
+      padding: 72px 0 0;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 56px;
+      border-bottom: 1px solid rgba(245,240,232,0.08);
+    }
+    .footer-brand {}
+    .footer-logo-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .footer-logo-icon {
+      width: 36px; height: 36px;
+      background: var(--gold);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .footer-logo-icon svg { width: 20px; height: 20px; }
+    .footer-wordmark {
+      font-family: var(--font-display);
+      font-size: 20px;
+      letter-spacing: 0.04em;
+      color: var(--paper);
+    }
+    .footer-wordmark span { color: var(--gold); }
+    .footer-desc {
+      font-size: 13px;
+      line-height: 1.7;
+      color: rgba(245,240,232,0.4);
+      max-width: 240px;
+      margin-bottom: 24px;
+    }
+    .footer-socials {
+      display: flex;
+      gap: 10px;
+    }
+    .social-btn {
+      width: 36px; height: 36px;
+      border-radius: 4px;
+      border: 1px solid rgba(245,240,232,0.12);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(245,240,232,0.5);
+      font-size: 14px;
+      transition: background 0.22s, border-color 0.22s, color 0.22s;
+    }
+    .social-btn:hover { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+
+    .footer-col {}
+    .footer-col-title {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .footer-col ul li {
+      margin-bottom: 12px;
+    }
+    .footer-col ul li a {
+      font-size: 13px;
+      color: rgba(245,240,232,0.5);
+      transition: color 0.22s;
+    }
+    .footer-col ul li a:hover { color: var(--paper); }
+
+    .footer-bottom {
+      padding: 24px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(245,240,232,0.3);
+    }
+    .footer-tagline {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 13px;
+      color: rgba(245,240,232,0.3);
+    }
+    .footer-built {
+      font-size: 12px;
+      color: rgba(245,240,232,0.3);
+    }
+    .footer-built span { color: var(--gold); }
+
+    /* =============================================
+       SCROLL REVEAL
+    ============================================= */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* =============================================
+       RESPONSIVE
+    ============================================= */
+    @media (max-width: 900px) {
+      :root { --nav-h: 64px; }
+
+      .nav-links,
+      .nav-actions { display: none; }
+      .nav-hamburger { display: flex; }
+
+      #hero { grid-template-columns: 1fr; }
+      .hero-right {
+        min-height: 400px;
+        padding: 48px 24px;
+      }
+      .hero-left {
+        padding: 48px 24px;
+      }
+
+      .about-inner,
+      .founder-inner,
+      .contact-inner { grid-template-columns: 1fr; }
+
+      .values-grid { grid-template-columns: 1fr 1fr; }
+      .usp-grid { grid-template-columns: 1fr 1fr 1fr; }
+      .usp-item:nth-child(3) { border-right: none; }
+
+      .footer-top { grid-template-columns: 1fr 1fr; }
+
+      .ticker-item { font-size: 11px; padding: 0 20px; }
+
+      .form-row { grid-template-columns: 1fr; }
+
+      .usp-line-1, .usp-line-2, .usp-line-3 { font-size: clamp(52px, 13vw, 80px); }
+    }
+
+    @media (max-width: 600px) {
+      .values-grid { grid-template-columns: 1fr; }
+      .usp-grid { grid-template-columns: 1fr 1fr; }
+      .footer-top { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============================================================
+       NAVBAR
+  ============================================================ -->
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container nav-inner">
+
+      <!-- Logo -->
+      <a href="/" class="nav-logo" aria-label="BBT Brand Business Talk Home">
+        <div class="nav-logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M4 4h6c2.2 0 4 1.8 4 4s-1.8 4-4 4H4V4z" fill="#c9a84c"/>
+            <path d="M4 12h7c2.2 0 4 1.8 4 4s-1.8 4-4 4H4V12z" fill="#f5f0e8"/>
+          </svg>
+        </div>
+        <div class="nav-logo-text">
+          <div class="wordmark">BBT<span>.</span></div>
+          <div class="tagline">Brand Business Talk</div>
+        </div>
+      </a>
+
+      <!-- Center links -->
+      <ul class="nav-links" role="list">
+        <li><a href="#about">About</a></li>
+        <li><a href="#values">Values</a></li>
+        <li><a href="#usp">USP</a></li>
+        <li><a href="#founder">Founder</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <!-- Right CTAs -->
+      <div class="nav-actions">
+        <a href="#contact" class="btn-ghost">Contact</a>
+        <a href="#contact" class="btn-gold">Subscribe</a>
+      </div>
+
+      <!-- Hamburger -->
+      <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false" id="hamburger">
+        <span></span><span></span><span></span>
+      </button>
+
+    </div>
+
+    <!-- Mobile menu -->
+    <div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
+      <a href="#about">Business</a>
+      <a href="#values">Brands</a>
+      <a href="#usp">Careers</a>
+      <a href="#founder">Tech</a>
+      <a href="#contact">About</a>
+      <a href="#contact" class="btn-gold">Subscribe →</a>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       HERO
+  ============================================================ -->
+  <section id="hero" aria-label="Hero">
+
+    <!-- Left column -->
+    <div class="hero-left">
+      <div class="hero-eyebrow">Where Brands &amp; Bold Ideas Come to Life</div>
+
+      <h1 class="hero-headline">
+        <span class="line1">Brand</span>
+        <span class="line2">Business</span>
+        <span class="line3">Talk.</span>
+      </h1>
+
+      <p class="hero-body">
+        A digital-first media platform simplifying business, branding, careers,
+        and technology — for every curious mind, not just the boardroom.
+      </p>
+
+      <div class="hero-ctas">
+        <a href="#about" class="btn-ink">Explore Stories</a>
+        <a href="#contact" class="btn-outline-gold">Subscribe Free →</a>
+      </div>
+
+      <div class="hero-stats" aria-label="Platform statistics">
+        <div class="stat-item">
+          <div class="stat-num">100<span>+</span></div>
+          <div class="stat-label">Brand Case Studies</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">5K<span>+</span></div>
+          <div class="stat-label">Readers</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" style="font-size:22px; color: var(--gold); padding-top:6px;">✦</div>
+          <div class="stat-label">Clarity First</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right column -->
+    <div class="hero-right" aria-hidden="true">
+      <div class="hero-right-watermark">BBT</div>
+      <div class="hero-right-gradient2"></div>
+
+      <div class="hero-feature-card">
+        <span class="tag tag--red">Feature Story</span>
+        <p class="card-meta">Brand Intelligence · 5 min read</p>
+        <h2 class="card-headline">
+          How the world's sharpest brands build loyalty that outlasts trends
+        </h2>
+        <div class="card-pills">
+          <span class="pill">Branding</span>
+          <span class="pill">Strategy</span>
+          <span class="pill">Marketing</span>
+        </div>
+      </div>
+
+      <div class="hero-right-gradient"></div>
+    </div>
+
+  </section>
+
+  <!-- ============================================================
+       TICKER
+  ============================================================ -->
+  <div id="ticker" role="marquee" aria-label="Topics covered" aria-live="off">
+    <div class="ticker-track">
+      <!-- Two copies for seamless loop -->
+      <span class="ticker-item">Business Intelligence</span>
+      <span class="ticker-item">Brand Storytelling</span>
+      <span class="ticker-item">Market Trends</span>
+      <span class="ticker-item">Startup Ecosystem</span>
+      <span class="ticker-item">Career Insights</span>
+      <span class="ticker-item">Entrepreneur Focus</span>
+      <span class="ticker-item">Digital-First Perspective</span>
+      <span class="ticker-item">Business Intelligence</span>
+      <span class="ticker-item">Brand Storytelling</span>
+      <span class="ticker-item">Market Trends</span>
+      <span class="ticker-item">Startup Ecosystem</span>
+      <span class="ticker-item">Career Insights</span>
+      <span class="ticker-item">Entrepreneur Focus</span>
+      <span class="ticker-item">Digital-First Perspective</span>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       ABOUT
+  ============================================================ -->
+  <section id="about" aria-labelledby="about-heading">
+    <div class="container about-inner">
+
+      <div class="about-left reveal">
+        <div class="section-label">Who We Are</div>
+        <h2 class="about-headline" id="about-heading">
+          We believe information should not be <em>complicated.</em>
+        </h2>
+        <p class="about-para">
+          BBT was built on the conviction that great ideas — business, branding, culture,
+          technology — should be accessible to everyone. We translate complexity into clarity,
+          so you can act on what you learn.
+        </p>
+        <p class="about-para">
+          Every piece we publish is crafted to be intelligent without being intimidating,
+          editorial without being elitist, and grounded in the real dynamics shaping
+          markets and brands today.
+        </p>
+      </div>
+
+      <div class="about-right reveal">
+
+        <div class="mv-card">
+          <div class="mv-watermark">M</div>
+          <div class="mv-accent"></div>
+          <h3 class="mv-title">Our Mission</h3>
+          <p class="mv-body">
+            To make business and brand knowledge genuinely accessible — removing the jargon,
+            cutting through the noise, and delivering intelligence that empowers every reader.
+          </p>
+        </div>
+
+        <div class="mv-card">
+          <div class="mv-watermark">V</div>
+          <div class="mv-accent"></div>
+          <h3 class="mv-title">Our Vision</h3>
+          <p class="mv-body">
+            A world where brand literacy and business acumen are universal — not exclusive
+            to those in corner offices. We're building the media platform that gets you there.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VALUES
+  ============================================================ -->
+  <section id="values" aria-labelledby="values-heading">
+    <div class="container">
+      <div class="values-header reveal">
+        <div class="section-label" style="color: var(--gold);">What Drives Us</div>
+        <h2 class="values-headline" id="values-heading">Our Core <span>Values</span></h2>
+      </div>
+
+      <div class="values-grid">
+
+        <article class="value-card reveal">
+          <div class="value-num">01</div>
+          <h3 class="value-title">Clarity</h3>
+          <p class="value-body">
+            We strip complexity down to its essence. Every story, every insight is
+            written so it can be immediately understood and applied.
+          </p>
+        </article>
+
+        <article class="value-card reveal" style="transition-delay: 0.1s">
+          <div class="value-num">02</div>
+          <h3 class="value-title">Innovation</h3>
+          <p class="value-body">
+            We stay at the frontier of business and brand thinking — surfacing
+            what's next before it becomes mainstream.
+          </p>
+        </article>
+
+        <article class="value-card reveal" style="transition-delay: 0.2s">
+          <div class="value-num">03</div>
+          <h3 class="value-title">Trust</h3>
+          <p class="value-body">
+            Everything we publish is grounded in rigorous research, honest
+            perspective, and a commitment to accuracy above engagement.
+          </p>
+        </article>
+
+        <article class="value-card reveal" style="transition-delay: 0.3s">
+          <div class="value-num">04</div>
+          <h3 class="value-title">Growth</h3>
+          <p class="value-body">
+            We exist to grow our readers — intellectually, professionally, and
+            in their understanding of the world of business.
+          </p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       USP
+  ============================================================ -->
+  <section id="usp" aria-labelledby="usp-heading">
+    <div class="container">
+      <div class="usp-statement reveal">
+        <h2 id="usp-heading">
+          <span class="usp-line usp-line-1">Simplifying</span>
+          <span class="usp-line usp-line-2">Business</span>
+          <span class="usp-line usp-line-3">Everyone.</span>
+        </h2>
+      </div>
+
+      <div class="usp-grid reveal">
+        <div class="usp-item">
+          <span class="usp-icon" aria-hidden="true">💡</span>
+          <span class="usp-item-label">Insights</span>
+        </div>
+        <div class="usp-item">
+          <span class="usp-icon" aria-hidden="true">🏷️</span>
+          <span class="usp-item-label">Brand Stories</span>
+        </div>
+        <div class="usp-item">
+          <span class="usp-icon" aria-hidden="true">📈</span>
+          <span class="usp-item-label">Trends</span>
+        </div>
+        <div class="usp-item">
+          <span class="usp-icon" aria-hidden="true">🚀</span>
+          <span class="usp-item-label">Entrepreneur Focus</span>
+        </div>
+        <div class="usp-item" style="border-right:none;">
+          <span class="usp-icon" aria-hidden="true">🌐</span>
+          <span class="usp-item-label">Digital First</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOUNDER
+  ============================================================ -->
+  <section id="founder" aria-labelledby="founder-heading">
+    <div class="container founder-inner">
+
+      <div class="founder-portrait reveal">
+        <div class="founder-card">
+          <div class="founder-initials-ghost"></div>
+          <div class="founder-initials"><img src="profile.jpg"></div>
+          <div class="founder-badge">Creator &amp; Founder / Raunak Pandey</div>
+        </div>
+      </div>
+
+      <div class="founder-right reveal">
+        <div class="section-label">Meet the Founder</div>
+        <h2 class="founder-name" id="founder-heading">Raunak<br/>Pandey</h2>
+        <div class="founder-role">Creator &amp; Founder, BBT</div>
+        <p class="founder-bio">
+          Raunak Pandey built BBT from a simple frustration — that the best business
+          and brand intelligence was locked behind complexity, jargon, and paywalls.
+          With a deep passion for storytelling, brand strategy, and democratising
+          access to knowledge, he set out to build a platform that speaks to every
+          curious professional, not just those already inside the industry.
+        </p>
+        <p class="founder-bio">
+          BBT is his commitment to the idea that intelligence should be a bridge,
+          not a barrier — and that the best media respects your time as much as
+          your intellect.
+        </p>
+        <blockquote>
+          <p>"Knowledge should empower everyone — not just those in boardrooms."</p>
+        </blockquote>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CONTACT
+  ============================================================ -->
+  <section id="contact" aria-labelledby="contact-heading">
+    <div class="container contact-inner">
+
+      <div class="contact-left reveal">
+        <div class="section-label">Get in Touch</div>
+        <h2 class="contact-headline" id="contact-heading">
+          Let's start a conversation worth having.
+        </h2>
+
+        <div class="contact-cards">
+
+          <div class="contact-card">
+            <div class="cc-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+              </svg>
+            </div>
+            <div class="cc-text">
+              <div class="cc-label">Email</div>
+              <div class="cc-value">hello@brandbusinesstalk.com</div>
+            </div>
+          </div>
+
+          <div class="contact-card">
+            <div class="cc-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+            </div>
+            <div class="cc-text">
+              <div class="cc-label">X / Twitter</div>
+              <div class="cc-value">@brandbizTalk</div>
+            </div>
+          </div>
+
+          <div class="contact-card">
+            <div class="cc-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+              </svg>
+            </div>
+            <div class="cc-text">
+              <div class="cc-label">LinkedIn</div>
+              <div class="cc-value">linkedin.com/in/brandbusinesstalk</div>
+            </div>
+          </div>
+
+          <div class="contact-card">
+            <div class="cc-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+              </svg>
+            </div>
+            <div class="cc-text">
+              <div class="cc-label">Instagram</div>
+              <div class="cc-value">@brandbusinesstalk</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="contact-form-wrap reveal">
+        <h3 class="form-title">Send a Message</h3>
+        <form id="contactForm" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">First Name</label>
+              <input type="text" id="firstName" name="firstName" placeholder="Raunak" autocomplete="given-name" />
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input type="text" id="lastName" name="lastName" placeholder="Pandey" autocomplete="family-name" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" />
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" placeholder="Collaboration, pitch, or just hello..." />
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Tell us what's on your mind..."></textarea>
+          </div>
+          <button type="submit" class="form-submit">Send Message →</button>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer id="footer" role="contentinfo">
+    <div class="container">
+
+      <div class="footer-top">
+
+        <!-- Brand col -->
+        <div class="footer-brand">
+          <div class="footer-logo-row">
+            <div class="footer-logo-icon">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M4 4h6c2.2 0 4 1.8 4 4s-1.8 4-4 4H4V4z" fill="#0d0d0d"/>
+                <path d="M4 12h7c2.2 0 4 1.8 4 4s-1.8 4-4 4H4V12z" fill="#0d0d0d"/>
+              </svg>
+            </div>
+            <div class="footer-wordmark">BBT<span>.</span></div>
+          </div>
+          <p class="footer-desc">
+            A digital media platform for curious minds — simplifying business, branding,
+            and culture, one story at a time.
+          </p>
+          <div class="footer-socials">
+            <a href="#" class="social-btn" aria-label="X / Twitter">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <a href="#" class="social-btn" aria-label="LinkedIn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+            </a>
+            <a href="#" class="social-btn" aria-label="Instagram">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Explore col -->
+        <div class="footer-col">
+          <h4 class="footer-col-title">Explore</h4>
+          <ul>
+            <li><a href="#">Business</a></li>
+            <li><a href="#">Brands</a></li>
+            <li><a href="#">Technology</a></li>
+            <li><a href="#">Entrepreneurship</a></li>
+            <li><a href="#">Culture</a></li>
+          </ul>
+        </div>
+
+        <!-- Learn col -->
+        <div class="footer-col">
+          <h4 class="footer-col-title">Learn</h4>
+          <ul>
+            <li><a href="#">Case Studies</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Market Trends</a></li>
+            <li><a href="#">Brand Playbooks</a></li>
+            <li><a href="#">Startup Insights</a></li>
+          </ul>
+        </div>
+
+        <!-- Company col -->
+        <div class="footer-col">
+          <h4 class="footer-col-title">Company</h4>
+          <ul>
+            <li><a href="#about">About BBT</a></li>
+            <li><a href="#founder">The Founder</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#">Advertise</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Bottom strip -->
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2025 BBT — Brand Business Talk. All rights reserved.</p>
+        <p class="footer-tagline">Where Brands &amp; Bold Ideas Come to Life</p>
+        <p class="footer-built">Built with <span>Clarity</span> ✦</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       JAVASCRIPT
+  ============================================================ -->
+  <script>
+    /* ---- Navbar scroll shadow ---- */
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    /* ---- Hamburger menu ---- */
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    hamburger.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', isOpen);
+      const spans = hamburger.querySelectorAll('span');
+      if (isOpen) {
+        spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+      } else {
+        spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+      }
+    });
+
+    /* Close mobile menu when a link is clicked */
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        hamburger.querySelectorAll('span').forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+      });
+    });
+
+    /* ---- Scroll reveal ---- */
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    revealEls.forEach(el => revealObserver.observe(el));
+
+    /* ---- Contact form ---- */
+    const form = document.getElementById('contactForm');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const btn = form.querySelector('.form-submit');
+      btn.textContent = 'Message Sent ✓';
+      btn.style.background = '#2ecc71';
+      btn.style.color = '#fff';
+      setTimeout(() => {
+        btn.textContent = 'Send Message →';
+        btn.style.background = '';
+        btn.style.color = '';
+        form.reset();
+      }, 3500);
+    });
+  </script>
+
+</body>
+</html>
